@@ -1,12 +1,14 @@
 <?php
 
-namespace app\models;
+namespace app\modules\rest\v1\models;
 
 use Yii;
+//use dektrium\user\models\User;
 
 /**
  * This is the model class for table "rest_token".
  *
+ * @property integer $id
  * @property integer $user_id
  * @property string $code
  * @property integer $created_at
@@ -29,11 +31,9 @@ class RestToken extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'code', 'created_at'], 'required'],
             [['user_id', 'created_at'], 'integer'],
             [['code'], 'string', 'max' => 32],
-//            [['user_id', 'code'], 'unique', 'targetAttribute' => ['user_id', 'code'], 'message' => 'The combination of User ID and Code has already been taken.'],
-//            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -43,6 +43,7 @@ class RestToken extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'user_id' => 'User ID',
             'code' => 'Code',
             'created_at' => 'Created At',
@@ -54,6 +55,6 @@ class RestToken extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\dektrium\user\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

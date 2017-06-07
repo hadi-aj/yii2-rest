@@ -71,13 +71,7 @@ $config = [
      */
     ],
     'params' => $params,
-    'modules' => [
-        'user' => [
-            'class' => 'dektrium\user\Module',
-            'admins' => ['hadi']
-        ],
-        'rbac' => 'dektrium\rbac\RbacWebModule',
-    ],
+    'modules' => require(__DIR__ . '/modules.php'),
 ];
 
 if (YII_ENV_DEV) {
